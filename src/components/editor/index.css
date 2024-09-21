@@ -1,0 +1,120 @@
+.tiptap {
+  @apply focus-visible:outline-none;
+}
+
+.tiptap :first-child {
+  margin-top: 0;
+}
+
+.tiptap blockquote {
+  @apply border-l-2 border-gray-300 pl-4 my-4;
+}
+
+.tiptap pre {
+  @apply bg-gray-600 p-4 my-4 rounded-md text-white;
+}
+
+.tiptap pre code {
+  @apply bg-gray-600 p-1 my-1 rounded-md text-white;
+}
+
+.tiptap h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  @apply my-4 font-bold leading-tight;
+}
+
+.tiptap h1 {
+  @apply text-4xl;
+}
+
+.tiptap h2 {
+  @apply text-3xl;
+}
+
+.tiptap h3 {
+  @apply text-2xl;
+}
+
+.tiptap h4,
+h5,
+h6 {
+  @apply text-xl;
+}
+
+.tiptap hr {
+  @apply my-6 border-t border-gray-300;
+}
+
+.tiptap ul,
+ol {
+  @apply mx-4 mt-4 mb-4;
+}
+
+.tiptap ul {
+  @apply list-disc;
+}
+
+.tiptap ul ul {
+  @apply m-0 ml-5 list-[circle];
+}
+
+.tiptap ul ul ul {
+  @apply m-0 ml-5 list-[square];
+}
+
+.tiptap ol {
+  @apply list-decimal;
+}
+
+.tiptap ol ol {
+  @apply m-0 ml-5;
+}
+
+.tiptap ul p,
+ol p {
+  @apply my-0;
+}
+
+.tiptap code {
+  @apply bg-gray-600 px-1 my-1 mx-1 rounded-md text-white text-sm;
+}
+
+.tiptap p {
+  @apply my-2;
+}
+
+.tiptap ul[data-type="taskList"] {
+  @apply list-none ml-0 p-0;
+}
+
+.tiptap ul[data-type="taskList"] li {
+  @apply items-start flex;
+}
+
+.tiptap ul[data-type="taskList"] li>label {
+  @apply flex-shrink-0 flex-grow-0 mr-2 select-none;
+}
+
+.tiptap ul[data-type="taskList"] li>div {
+  @apply flex-auto;
+}
+
+.tiptap ul[data-type="taskList"] input[type="checkbox"] {
+  @apply cursor-pointer;
+}
+
+.tiptap ul[data-type="taskList"] ul[data-type="taskList"] {
+  @apply m-0;
+}
+
+.tiptap a {
+  @apply text-blue-500 underline cursor-pointer;
+}
+
+.tiptap a:hover {
+  @apply text-blue-600;
+}
