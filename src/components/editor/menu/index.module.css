@@ -1,0 +1,7 @@
+.popoverArrow {
+	transition: all 0.3s;
+}
+
+.popoverArrowBtn[data-state="open"] .popoverArrow {
+	transform: rotate(180deg);
+}

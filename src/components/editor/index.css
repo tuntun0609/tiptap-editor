@@ -118,3 +118,37 @@ ol p {
 .tiptap a:hover {
   @apply text-blue-600;
 }
+
+.tiptap table {
+  @apply border-collapse border border-gray-300;
+}
+
+.tiptap table th {
+  @apply align-top relative border min-w-4 px-2 py-1 border-gray-300 bg-gray-100 font-bold;
+}
+
+.tiptap table th * {
+  @apply m-0;
+}
+
+.tiptap table td {
+  @apply align-top relative border min-w-4 px-2 py-1 border-gray-300;
+}
+
+.tiptap table td * {
+  @apply m-0;
+}
+
+.tiptap table .selectedCell:after {
+  @apply bg-gray-200 absolute left-0 right-0 top-0 bottom-0 pointer-events-none z-[-1];
+  content: "";
+}
+
+.tiptap table .column-resize-handle {
+  @apply bg-purple-500 bottom-[-2px] pointer-events-none absolute right-[-2px] top-0 w-[4px] z-[2];
+}
+
+.tiptap.resize-cursor {
+  cursor: ew-resize;
+  cursor: col-resize;
+}
