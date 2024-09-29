@@ -128,6 +128,14 @@ export const useContentTypePicker = (editor: Editor) => {
         disabled: () => !ctx.editor.can().toggleTaskList(),
         isActive: () => ctx.editor.isActive('taskList'),
       },
+      {
+        icon: 'Quote',
+        name: '引用',
+        id: 'blockquote',
+        onClick: () => ctx.editor.chain().focus().toggleBlockquote().run(),
+        disabled: () => !ctx.editor.can().toggleBlockquote(),
+        isActive: () => ctx.editor.isActive('blockquote'),
+      },
     ],
   })
 }

@@ -1,6 +1,11 @@
 import { EditorState } from '@tiptap/pm/state'
 import { EditorView } from '@tiptap/pm/view'
-import { BubbleMenu, Editor, isTextSelection } from '@tiptap/react'
+import {
+  BubbleMenu,
+  Editor,
+  isTextSelection,
+  useEditorState,
+} from '@tiptap/react'
 import CodeBlock from '@tiptap/extension-code-block'
 import Table from '@tiptap/extension-table'
 import Link from '@tiptap/extension-link'
@@ -11,8 +16,29 @@ import { MemoContentTypePicker } from './content-type-picker'
 import { Divider } from './divider'
 import { useCallback } from 'react'
 import { MemoAlignPicker } from './align-picker'
+import { MemoColorPicker } from './color-picker'
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from '@/components/ui/popover'
+import { MemoLinkEditor } from './link-editor'
 
 export const TextMenu = ({ editor }: { editor: Editor }) => {
+  const states: {
+    currentColor: string
+    currentHighlight: string
+  } = useEditorState({
+    editor,
+    selector: (ctx) => {
+      return {
+        currentColor: ctx.editor.getAttributes('textStyle')?.color || '#000000',
+        currentHighlight:
+          ctx.editor.getAttributes('highlight')?.color || undefined,
+      }
+    },
+  })
+
   const shouldShow = useCallback(
     (props: {
       editor: Editor
@@ -57,12 +83,45 @@ export const TextMenu = ({ editor }: { editor: Editor }) => {
     [editor]
   )
 
+  const onResetColor = useCallback(() => {
+    editor.chain().unsetColor().run()
+  }, [editor])
+
+  const onChangeColor = useCallback(
+    (color: string) => {
+      editor.chain().setColor(color).run()
+    },
+    [editor]
+  )
+
+  const onChangeHighlight = useCallback(
+    (color: string) => {
+      editor.chain().setHighlight({ color }).run()
+    },
+    [editor]
+  )
+
+  const onResetHighlight = useCallback(() => {
+    editor.chain().unsetHighlight().run()
+  }, [editor])
+
+  const onEditLink = useCallback(
+    (url: string, openInNewTab: boolean) => {
+      editor
+        .chain()
+        .focus()
+        .setLink({ href: url, target: openInNewTab ? '_blank' : '' })
+        .run()
+    },
+    [editor]
+  )
+
   return (
     <BubbleMenu
       tippyOptions={{
         animation: 'fade',
+        placement: 'top',
         popperOptions: {
-          placement: 'top-start',
           modifiers: [
             {
               name: 'preventOverflow',
@@ -174,6 +233,56 @@ export const TextMenu = ({ editor }: { editor: Editor }) => {
           tooltip="下标">
           <Icon name="Subscript" />
         </ToggleButton>
+        <MemoLinkEditor onConfirm={onEditLink} />
+        <Divider />
+        <Popover>
+          <PopoverTrigger asChild>
+            <div>
+              <ToggleButton
+                pressed={states.currentColor !== '#000000'}
+                tooltip="文字颜色">
+                <Icon name="Palette" />
+              </ToggleButton>
+            </div>
+          </PopoverTrigger>
+          <PopoverContent
+            asChild
+            align="center"
+            sideOffset={8}
+            className="p-1 w-[200px_+_0.5rem] bg-white dark:bg-zinc-800">
+            <div>
+              <MemoColorPicker
+                color={states.currentColor}
+                onChange={onChangeColor}
+                onReset={onResetColor}
+              />
+            </div>
+          </PopoverContent>
+        </Popover>
+        <Popover>
+          <PopoverTrigger asChild>
+            <div>
+              <ToggleButton
+                pressed={states.currentHighlight !== undefined}
+                tooltip="文字背景">
+                <Icon name="Highlighter" />
+              </ToggleButton>
+            </div>
+          </PopoverTrigger>
+          <PopoverContent
+            asChild
+            align="center"
+            sideOffset={8}
+            className="p-1 w-[200px_+_0.5rem] bg-white dark:bg-zinc-800">
+            <div>
+              <MemoColorPicker
+                color={states.currentHighlight}
+                onChange={onChangeHighlight}
+                onReset={onResetHighlight}
+              />
+            </div>
+          </PopoverContent>
+        </Popover>
       </div>
     </BubbleMenu>
   )

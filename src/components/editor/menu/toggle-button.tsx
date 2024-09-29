@@ -6,7 +6,7 @@ import {
 } from '@/components/ui/tooltip'
 import { cn } from '@/lib/utils'
 import { ToggleProps } from '@radix-ui/react-toggle'
-import { forwardRef, ReactNode } from 'react'
+import { forwardRef, memo, ReactNode } from 'react'
 
 export const ToggleButton = forwardRef<
   HTMLButtonElement,
@@ -36,4 +36,4 @@ export const ToggleButton = forwardRef<
 
 ToggleButton.displayName = 'ToggleButton'
 
-// export const ToggleButton = memo(RawToggleButton)
+export const MemoToggleButton = memo(ToggleButton)

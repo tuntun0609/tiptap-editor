@@ -19,8 +19,11 @@ import TextStyle from '@tiptap/extension-text-style'
 import FontFamily from '@tiptap/extension-font-family'
 import { Color } from '@tiptap/extension-color'
 import TextAlign from '@tiptap/extension-text-align'
+import Highlight from '@tiptap/extension-highlight'
 import { TextMenu } from './menu'
 import { TooltipProvider } from '../ui/tooltip'
+import { LinkMenu } from './menu/link-menu'
+import React from 'react'
 
 const TiptapEditor = () => {
   const editor = useEditor({
@@ -35,7 +38,7 @@ const TiptapEditor = () => {
         nested: true,
       }),
       Link.configure({
-        openOnClick: true,
+        openOnClick: false,
         autolink: true,
         defaultProtocol: 'https',
       }),
@@ -62,6 +65,12 @@ const TiptapEditor = () => {
       Color,
       TextAlign.configure({
         types: ['heading', 'paragraph'],
+      }),
+      Highlight.configure({
+        HTMLAttributes: {
+          class: 'rounded-sm',
+        },
+        multicolor: true,
       }),
     ],
     content: `
@@ -184,7 +193,12 @@ const TiptapEditor = () => {
     <TooltipProvider>
       <div className="relative">
         <EditorContent editor={editor} />
-        {editor && <TextMenu editor={editor} />}
+        {editor && (
+          <>
+            <TextMenu editor={editor} />
+            <LinkMenu editor={editor} />
+          </>
+        )}
       </div>
     </TooltipProvider>
   )
