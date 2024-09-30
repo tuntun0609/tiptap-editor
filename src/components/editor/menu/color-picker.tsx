@@ -35,7 +35,7 @@ export const ColorPicker = ({
           />
         </div>
         <Tooltip>
-          <TooltipTrigger>
+          <TooltipTrigger asChild>
             <Button
               variant="outline"
               size="icon"
